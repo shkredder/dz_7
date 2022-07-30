@@ -32,31 +32,41 @@ console.log(specialMultiply(3)(4)); // 12
 console.log(specialMultiply(3)); // function(){}....
 
 //task 3
-function game(userAttempt, randomNum) {
-    if (userAttempt === randomNum) {
-        console.log("You got it!");
-        return (guess = 1);
-    } else if (userAttempt > randomNum) {
-        console.log("Your guess is too high!");
-    } else if (userAttempt < randomNum) {
-        console.log("Your guess is too low!");
-    }
-}
-
-const userEnter = Number(prompt("Enter the number of game attempts:"));
-
 const guessingGame = (gameAttemps) => {
     const randomNum = Math.floor(Math.random() * 11);
-    let guess, userAttempt;
-    debugger;
-    for (let i = 1; i < gameAttemps + 1; i++) {
-        userAttempt = Number(prompt(`Enter the ${i} number:`));
-        if (game(userAttempt, randomNum) === 1) {
-            console.log("You know the answer. What do you want from me?");
-            break;
+    let counter = 0,
+        guess = 0;
+    return function game(userAttempt) {
+        if (counter === gameAttemps) {
+            console.log(`No more guesses the answer was ${randomNum}! Please start a new game.`);
+            return;
         }
-    }
-    return `No more guesses the answer was ${randomNum}! Please start a new game.`;
+
+        if (guess === 1) {
+            console.log("You know the answer. What do you want from me?");
+            return (counter = gameAttemps);
+        } else {
+            if (userAttempt === randomNum) {
+                console.log("You got it!");
+                return (guess = 1);
+            } else if (userAttempt > randomNum) {
+                console.log("Your guess is too high!");
+            } else if (userAttempt < randomNum) {
+                console.log("Your guess is too low!");
+            }
+        }
+        return counter++;
+    };
 };
 
-console.log(guessingGame(userEnter));
+let game2 = guessingGame(7);
+game2(1);
+game2(8);
+game2(5);
+game2(7);
+game2(0);
+game2(10);
+game2(9);
+game2(6);
+game2(4);
+game2(2);
